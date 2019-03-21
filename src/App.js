@@ -15,7 +15,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View>
-        <StatusBar backgroundColor="#d32f2f" barStyle="light-content" />
+        <StatusBar backgroundColor="#bf3d3d" barStyle="light-content" />
         <Home />
       </View>
     );

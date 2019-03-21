@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 import { View, Text, FlatList, StyleSheet, TouchableNativeFeedback } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { Fonts } from "../utils/fonts";
 
 const MockedWords = [
@@ -41,29 +43,46 @@ class WordsList extends PureComponent {
 
 const Tile = ({ tileItem }) => (
   <TouchableNativeFeedback>
-    <View style={styles.tileList}>
-      <Text style={styles.item}> {tileItem}</Text>
+    <View style={styles.container}>
+      <View style={styles.tileList}>
+        <Text style={styles.item}> {tileItem}</Text>
+      </View>
+      <View style={styles.tileItemButton}>
+        <Text style={styles.item}>
+          <Icon name="favorite" size={25} color="red" solid/>
+        </Text>
+      </View>
     </View>
   </TouchableNativeFeedback>
 );
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    // borderWidth: 1,
+    borderBottomWidth: 0.3,
+    borderColor: 'lightgray',
   },
   tileList: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'flex-start',
     height: 80,
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderTopWidth: 0.4,
-    borderColor: 'lightgray',
+    paddingLeft: 18,
+    paddingRight: 18,
     backgroundColor: 'transparent',
+  },
+  tileItemButton: {
+    flex: 1,
+    paddingRight: 15,
+    justifyContent: 'center',
+    alignItems: 'flex-end'
   },
   item: {
     fontSize: 18,
+    color: '#262525',
     fontFamily: Fonts.OpenSans
-  }
+  },
 });
 
 export default WordsList;
