@@ -1,27 +1,55 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Button } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+
 import WordsList from '../components/WordsList';
 import { Fonts } from '../utils/fonts';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-class Home extends PureComponent {
+class HomeScreen extends PureComponent {
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Startup Name Generator',
+      headerStyle: {
+        backgroundColor: '#ff5252'
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontFamily: Fonts.OpenSansBold
+      },
+      headerRight: (
+        <Icon name="list" 
+        onPress={() => navigation.navigate('Favorites')} 
+        size={30} 
+        color="white" 
+        style={{marginRight: 15}} 
+        solid />
+        )
+      }
+  };
+
+  goToFavorites = () => {
+    console.log('here on press ');
+    this.props.navigation.navigate('Favorites');
+  }
+
   render () {
     return(
       <View>
+        <StatusBar backgroundColor="#bf3d3d" barStyle="light-content" />
+        {/* <View style={styles.container}>
+          <View style={styles.homeTitle}>
+            <Text style={styles.homeItem}>Favorite List</Text>
+          </View>
 
-      <View style={styles.container}>
-
-        <View style={styles.homeTitle}>
-          <Text style={styles.homeItem}>Favorite List</Text>
-        </View>
-
-        <View style={styles.homeBarButton}>
-          <Text style={styles.homeItem}>
-            <Icon name="list" size={30} color="white" solid/>
-          </Text>
-        </View>
-      </View>
+          <View style={styles.homeBarButton}>
+            <Text style={styles.homeItem}>
+              <Icon name="list" size={30} color="white" solid onPress={this.goToFavorites}/>
+            </Text>
+          </View>
+        </View> */}
 
         <WordsList />
       </View>
@@ -31,12 +59,9 @@ class Home extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // paddingTop: 14,
-    // paddingBottom: 16,
     paddingLeft: 12,
     paddingRight: 12,
-    height: 50,
+    height: 60,
     flexDirection: 'row',
     backgroundColor: '#ff5252',
     elevation: 5,
@@ -58,11 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    // flexDirection: 'row',
-    paddingTop: 10,
-    // paddingBottom: 18,
-    // paddingLeft: 12,
-    // paddingRight: 12,
+    paddingTop: 15,
     backgroundColor: '#ff5252',
     fontSize: 20,
     height: 20,
@@ -72,4 +93,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default HomeScreen;

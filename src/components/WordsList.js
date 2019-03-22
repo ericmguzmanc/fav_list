@@ -27,39 +27,80 @@ const MockedWords = [
   "ChaChaChanga"
 ];
 
+let alreadySaved = [];
+
 class WordsList extends PureComponent {
+
+  state = {
+    MockedWords: MockedWords,
+    alreadySaved: alreadySaved
+  }
+
+
+  seeIfSaved = (element) => {
+    return this.state.alreadySaved.includes(element);
+  }
+
+  saveWord = (element) => {
+    if (this.state.alreadySaved.includes(element)) {
+      const newAlreadySavedArray = this.state.alreadySaved.filter(word => word != element);
+      this.setState({
+        alreadySaved: [
+          ...newAlreadySavedArray
+        ]
+      });
+      
+    } else {
+      this.setState({
+        alreadySaved: [
+          ...this.state.alreadySaved,
+          element
+        ]
+      });
+    }
+
+  }
+  
+  Tile = (item) => (
+    <TouchableNativeFeedback
+      onPress={() => this.saveWord(item)}
+    >
+      <View style={styles.container}>
+        <View style={styles.tileList}>
+          <Text style={styles.item}> {item}</Text>
+        </View>
+        <View style={styles.tileItemButton}>
+          <Text style={styles.item}>
+              {this.seeIfSaved(item) ? (
+                <Icon name="favorite" size={25} color="red" solid/>
+              ) : (
+                <Icon name="favorite-border" size={25} color="gray" solid/>
+              )}
+          </Text>
+        </View>
+      </View>
+    </TouchableNativeFeedback>
+  );
+
+  
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={MockedWords}
+          data={this.state.MockedWords}
           keyExtractor={ (element, index) => `${element}${index}`}
-          renderItem={({ item }) => <Tile tileItem={item}/>}
-        />
+          renderItem={({ item }) => this.Tile(item)}
+          extraData={this.state.alreadySaved}
+          />
       </View>
     );
   }
 }
 
-const Tile = ({ tileItem }) => (
-  <TouchableNativeFeedback>
-    <View style={styles.container}>
-      <View style={styles.tileList}>
-        <Text style={styles.item}> {tileItem}</Text>
-      </View>
-      <View style={styles.tileItemButton}>
-        <Text style={styles.item}>
-          <Icon name="favorite" size={25} color="red" solid/>
-        </Text>
-      </View>
-    </View>
-  </TouchableNativeFeedback>
-);
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    // borderWidth: 1,
     borderBottomWidth: 0.3,
     borderColor: 'lightgray',
   },
@@ -74,7 +115,7 @@ const styles = StyleSheet.create({
   },
   tileItemButton: {
     flex: 1,
-    paddingRight: 15,
+    paddingRight: 18,
     justifyContent: 'center',
     alignItems: 'flex-end'
   },

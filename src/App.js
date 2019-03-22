@@ -1,26 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
-import Home from './screens/Home'; 
+import { Text, View, StatusBar } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-type Props = {};
-export default class App extends Component<Props> {
+import Navigation from './navigation/Navigation';
+
+// const App = createAppContainer(Navigation);
+// export default App;
+
+export default class App extends Component{
   render() {
     return (
-      <View>
-        <StatusBar backgroundColor="#bf3d3d" barStyle="light-content" />
-        <Home />
-      </View>
+      // <View>
+      //   <StatusBar backgroundColor="#bf3d3d" barStyle="light-content" />
+        <Navigation />
+      // </View>
     );
   }
 }
+
+// export default create
 
 // const styles = StyleSheet.create({
 //   container: {
