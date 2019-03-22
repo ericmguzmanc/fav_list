@@ -90,7 +90,7 @@ class WordsList extends PureComponent {
           data={this.state.MockedWords}
           keyExtractor={ (element, index) => `${element}${index}`}
           renderItem={({ item }) => this.Tile(item)}
-          extraData={this.state.alreadySaved}
+          extraData={this.state.alreadySaved.length}
           />
       </View>
     );
@@ -111,13 +111,14 @@ const styles = StyleSheet.create({
     height: 80,
     paddingLeft: 18,
     paddingRight: 18,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
   },
   tileItemButton: {
     flex: 1,
     paddingRight: 18,
     justifyContent: 'center',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    backgroundColor: 'white',
   },
   item: {
     fontSize: 18,

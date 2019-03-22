@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, StatusBar, Button } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 
 import WordsList from '../components/WordsList';
 import { Fonts } from '../utils/fonts';
@@ -8,7 +7,6 @@ import { Fonts } from '../utils/fonts';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class HomeScreen extends PureComponent {
-
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Startup Name Generator',
@@ -21,11 +19,11 @@ class HomeScreen extends PureComponent {
       },
       headerRight: (
         <Icon name="list" 
-        onPress={() => navigation.navigate('Favorites')} 
-        size={30} 
-        color="white" 
-        style={{marginRight: 15}} 
-        solid />
+          onPress={() => navigation.navigate('Favorites')} 
+          size={30} 
+          color="white" 
+          style={{marginRight: 15}} 
+          solid />
         )
       }
   };
@@ -39,18 +37,6 @@ class HomeScreen extends PureComponent {
     return(
       <View>
         <StatusBar backgroundColor="#bf3d3d" barStyle="light-content" />
-        {/* <View style={styles.container}>
-          <View style={styles.homeTitle}>
-            <Text style={styles.homeItem}>Favorite List</Text>
-          </View>
-
-          <View style={styles.homeBarButton}>
-            <Text style={styles.homeItem}>
-              <Icon name="list" size={30} color="white" solid onPress={this.goToFavorites}/>
-            </Text>
-          </View>
-        </View> */}
-
         <WordsList />
       </View>
     );
