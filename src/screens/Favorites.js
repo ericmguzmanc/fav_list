@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+
+import { connect } from 'react-redux';
 
 import { Fonts } from '../utils/fonts';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class Favorites extends PureComponent {
 
@@ -19,24 +20,50 @@ class Favorites extends PureComponent {
 
   render () {
     return(
-      <View>
-        <Text style={{fontFamily: Fonts.OpenSansBold, fontSize: 18}}> Favorite Words. </Text>
-        {/* <WordsList /> */}
+      <View style={styles.container}>
+        {
+          this.props.favorites.length <= 0 ?
+          (
+            <View style={styles.emptyMsg}>
+              <Text >
+                You don't have Favorite words yet.
+              </Text>
+            </View>
+          ) : (
+            <FlatList 
+              data={this.props.favorites}
+              keyExtractor={(element, index) => `${element}${index}`}
+              renderItem={({ item }) => Tile(item)}
+            />
+          )
+        }
+        
       </View>
     );
   }
 }
 
-export default Favorites;
+const Tile = (item) => (
+  <View style={styles.tileListItem}>
+    <Text style={styles.tileItemText}>{item}</Text>
+  </View>
+);
+
+mapStateToProps = ({ favorites }) => {
+  return {
+    favorites
+  }
+};
+
+export default connect(mapStateToProps)(Favorites);
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    height: 50,
-    flexDirection: 'row',
-    backgroundColor: '#ff5252',
-    elevation: 5,
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  emptyMsg: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -62,5 +89,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '500',
     fontFamily: Fonts.OpenSans,
+  },
+  tileListItem: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    height: 80,
+    paddingLeft: 18,
+    paddingRight: 18,
+    backgroundColor: 'white',
+    borderBottomWidth: 0.3,
+    borderColor: 'lightgray',
+  }, 
+  tileItemText: {
+    fontSize: 18,
+    color: '#262525',
+    fontFamily: Fonts.OpenSans
   }
 });

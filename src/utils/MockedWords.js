@@ -1,0 +1,22 @@
+export const MockedWords = [
+  "AddisonAvenue",
+  "AtanasanaLab",
+  "JLoTicket",
+  "CapotilloMix",
+  "LosMinaVenue",
+  "ChaChaKill",
+  "UmbrellaAcademy",
+  "BatmanLair",
+  "WatterContent",
+  "DynoCave",
+  "HazelBridge",
+  "The UmbreAcademy",
+  "SupermanLair",
+  "JuiceContent",
+  "LionCave",
+  "The Happening",
+  "TheShinning",
+  "JuiceWaterfal",
+  "TigerCave",
+  "ChaChaChanga"
+];

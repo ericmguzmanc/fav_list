@@ -3,60 +3,27 @@ import { View, Text, FlatList, StyleSheet, TouchableNativeFeedback } from "react
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Fonts } from "../utils/fonts";
+import { MockedWords } from "../utils/MockedWords";
 
-const MockedWords = [
-  "AddisonAvenue",
-  "AtanasanaLab",
-  "JLoTicket",
-  "CapotilloMix",
-  "LosMinaVenue",
-  "ChaChaKill",
-  "UmbrellaAcademy",
-  "BatmanLair",
-  "WatterContent",
-  "DynoCave",
-  "HazelBridge",
-  "The UmbreAcademy",
-  "SupermanLair",
-  "JuiceContent",
-  "LionCave",
-  "The Happening",
-  "TheShinning",
-  "JuiceWaterfal",
-  "TigerCave",
-  "ChaChaChanga"
-];
-
-let alreadySaved = [];
+import { connect } from 'react-redux';
+import { dispatchFavName, dispatchUndoFavName } from '../store/favoritesActions';
 
 class WordsList extends PureComponent {
 
   state = {
     MockedWords: MockedWords,
-    alreadySaved: alreadySaved
   }
 
 
   seeIfSaved = (element) => {
-    return this.state.alreadySaved.includes(element);
+    return this.props.favorites.includes(element);
   }
 
   saveWord = (element) => {
-    if (this.state.alreadySaved.includes(element)) {
-      const newAlreadySavedArray = this.state.alreadySaved.filter(word => word != element);
-      this.setState({
-        alreadySaved: [
-          ...newAlreadySavedArray
-        ]
-      });
-      
+    if (this.props.favorites.includes(element)) {
+      this.props.dispatchUndoFavName(element);
     } else {
-      this.setState({
-        alreadySaved: [
-          ...this.state.alreadySaved,
-          element
-        ]
-      });
+      this.props.dispatchFavName(element);
     }
 
   }
@@ -64,13 +31,14 @@ class WordsList extends PureComponent {
   Tile = (item) => (
     <TouchableNativeFeedback
       onPress={() => this.saveWord(item)}
+      useForeground={true}
     >
       <View style={styles.container}>
-        <View style={styles.tileList}>
-          <Text style={styles.item}> {item}</Text>
+        <View style={styles.tileListItem}>
+          <Text style={styles.tileItemText}> {item}</Text>
         </View>
         <View style={styles.tileItemButton}>
-          <Text style={styles.item}>
+          <Text style={styles.tileItemText}>
               {this.seeIfSaved(item) ? (
                 <Icon name="favorite" size={25} color="red" solid/>
               ) : (
@@ -84,19 +52,29 @@ class WordsList extends PureComponent {
 
   
   render() {
+
+    console.log('state favorites', this.props.favorites, '\nalready saved ', this.props.favorites)
+
     return (
       <View style={styles.container}>
         <FlatList
           data={this.state.MockedWords}
-          keyExtractor={ (element, index) => `${element}${index}`}
+          keyExtractor={(element, index) => `${element}${index}`}
           renderItem={({ item }) => this.Tile(item)}
-          extraData={this.state.alreadySaved.length}
+          extraData={this.props.favorites.length}
           />
       </View>
     );
   }
 }
 
+const mapStateToProps = ({ favorites }) => {
+  return {
+    favorites
+  }
+};
+
+export default connect(mapStateToProps, { dispatchFavName, dispatchUndoFavName })(WordsList);
 
 const styles = StyleSheet.create({
   container: {
@@ -104,7 +82,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.3,
     borderColor: 'lightgray',
   },
-  tileList: {
+  tileListItem: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -120,11 +98,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: 'white',
   },
-  item: {
+  tileItemText: {
     fontSize: 18,
     color: '#262525',
     fontFamily: Fonts.OpenSans
   },
 });
 
-export default WordsList;
