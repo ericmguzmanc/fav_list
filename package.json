@@ -5,7 +5,12 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "rna": "emulator @Nexus_6P_API_25"
+    "android": "react-native run-android",
+    "android:clean": "cd android && gradlew clean && cd..",
+    "ios": "react-native run-ios",
+    "ios:clean": "cd ios && xcodebuild clean && cd ..",
+    "runa28": "cd C:/Users/ericm/AppData/Local/Android/Sdk/emulator && emulator.exe -avd Pixel_2_API_28",
+    "runa25": "cd C:/Users/ericm/AppData/Local/Android/Sdk/emulator emulator.exe -avd Pixel_2_API_24"
   },
   "dependencies": {
     "react": "16.8.3",

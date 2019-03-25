@@ -30,6 +30,7 @@ class WordsList extends PureComponent {
   
   Tile = (item) => (
     <TouchableNativeFeedback
+      useForeground={true}
       onPress={() => this.saveWord(item)}
       useForeground={true}
     >
